@@ -1,11 +1,11 @@
 #! /usr/bin/python
 """
 Updates the maven-metadata.xml file of Maven artifacts in accordance to the
-contents. It is very simple and thus may only work for very simple repostories.
+contents. It is very simple and thus may only work for very simple repostories
+like used by the Ontologizer.
 
 For the details of the model see
 https://maven.apache.org/ref/3.2.1/maven-repository-metadata/repository-metadata.html.
-
 """
 
 from __future__ import print_function
@@ -52,7 +52,7 @@ for root, dir, files in os.walk("."):
 
 		groups[group_id][artifact_id][version].append(file)
 
-# Build XML
+# Build maven-metadata.xml for each artifact
 for group_id, artifacts in groups.iteritems():
 	for artifact_id, artifact_versions in artifacts.iteritems():
 		mt = ET.Element("metadata")
