@@ -1,15 +1,11 @@
 #! /usr/bin/python
-"""
-Updates the maven-metadata.xml file of Maven artifacts in accordance to the
-contents. It is very simple and thus may only work for very simple repostories
-like used by the Ontologizer.
-
-For the details of the model see
-https://maven.apache.org/ref/3.2.1/maven-repository-metadata/repository-metadata.html.
-"""
+# For the details of the maven-metadata.xml model
+# https://maven.apache.org/ref/3.2.1/maven-repository-metadata/repository-metadata.html.
+#
 
 from __future__ import print_function
 
+import argparse
 import datetime
 import os
 import os.path
@@ -23,6 +19,14 @@ def ids(path):
 	if group_id.startswith('./'): group_id = group_id[2:]
 	group_id = group_id.replace('/','.')
 	return group_id, artifact_id
+
+parser = argparse.ArgumentParser(description="""
+	Updates the maven-metadata.xml file of Maven artifacts in accordance to the
+	contents. It is very simple and thus may only work for very simple repostories
+	like used by the Ontologizer.
+	""")
+args = parser.parse_args()
+
 
 utcnow = datetime.datetime.utcnow
 
