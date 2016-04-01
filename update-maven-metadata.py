@@ -2,6 +2,7 @@
 # For the details of the maven-metadata.xml model
 # https://maven.apache.org/ref/3.2.1/maven-repository-metadata/repository-metadata.html.
 #
+# (c) 2016 by Sebastian Bauer
 
 from __future__ import print_function
 
