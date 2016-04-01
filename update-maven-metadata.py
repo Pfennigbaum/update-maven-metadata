@@ -149,5 +149,7 @@ for group_id, artifacts in groups.iteritems():
 
 					os.rmdir(tmp_path)
 				snapshot = ET.SubElement(versioning,"snapshot")
+				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
+				ET.SubElement(snapshot,"buildNumber").text = str(build_number)
 			else: pass
 			print(minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  "), end="")
