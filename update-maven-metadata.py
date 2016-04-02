@@ -29,7 +29,7 @@ parser = argparse.ArgumentParser(description="""
 	thus may only work for very simple repostories like used by the Ontologizer.
 	Make sure to make a backup before using it.
 	""")
-parser.add_argument('--do-it', default=False, help="""
+parser.add_argument('--do-it', action='store_true', default=False, help="""
 	Do the actual operation. Without specifying this option, no write file
 	operation will actually happen.
 	""")
