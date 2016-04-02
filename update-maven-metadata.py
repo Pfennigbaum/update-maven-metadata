@@ -25,8 +25,9 @@ def ids(path):
 
 parser = argparse.ArgumentParser(description="""
 	Updates the maven-metadata.xml file of Maven artifacts in accordance to the
-	contents. It is very simple and thus may only work for very simple repostories
-	like used by the Ontologizer.
+	contents. It starts at the current working directory. It is very simple and
+	thus may only work for very simple repostories like used by the Ontologizer.
+	Make sure to make a backup before using it.
 	""")
 args = parser.parse_args()
 
