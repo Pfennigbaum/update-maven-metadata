@@ -29,8 +29,13 @@ parser = argparse.ArgumentParser(description="""
 	thus may only work for very simple repostories like used by the Ontologizer.
 	Make sure to make a backup before using it.
 	""")
+parser.add_argument('--do-it', default=False, help="""
+	Do the actual operation. Without specifying this option, no write file
+	operation will actually happen.
+	""")
 args = parser.parse_args()
 
+do_it = args.do_it
 
 utcnow = datetime.datetime.utcnow
 
@@ -140,15 +145,20 @@ for group_id, artifacts in groups.iteritems():
 					# folder first to avoid clashes that could happen on certain
 					# sorting orders
 
-					os.mkdir(tmp_path)
+					if do_it: os.mkdir(tmp_path)
+					else: print('Creating directory "{0}""'.format(tmp_path),file=sys.stderr)
 
 					for old_f, tmp_f in zip(old_files, tmp_files):
-						os.rename(old_f, tmp_f)
+						if do_it: os.rename(old_f, tmp_f)
+						else: print('Renaming "{0}" to "{1}"'.format(old_f, tmp_f),file=sys.stderr)
 
 					for tmp_f, new_f in zip(tmp_files, new_files):
-						os.rename(tmp_f, new_f)
+						if do_it: os.rename(tmp_f, new_f)
+						else: print('Renaming "{0}" to "{1}"'.format(tmp_f, old_f),file=sys.stderr)
 
-					os.rmdir(tmp_path)
+					if do_it: os.rmdir(tmp_path)
+					else: print('Removing directoy "{0}"'.format(tmp_path),file=sys.stderr)
+
 				snapshot = ET.SubElement(versioning,"snapshot")
 				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
 				ET.SubElement(snapshot,"buildNumber").text = str(build_number)
