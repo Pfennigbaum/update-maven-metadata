@@ -75,11 +75,25 @@ for group_id, artifacts in groups.iteritems():
 		ET.SubElement(mt,"artifactId").text = artifact_id
 		versioning = ET.SubElement(mt,"versioning")
 		versions = ET.SubElement(versioning,"versions")
+		path = None
 		for version in artifact_versions:
+			if path is None:
+				path = groups[group_id][artifact_id][version]["path"]
 			ET.SubElement(versions,"version").text = version
 		ET.SubElement(versioning, "lastUpdated").text = utcnow().strftime("%Y%m%d%H%M%S")
 
-		print(minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  "), end="")
+		if path is None:
+			sys.exit('Could not find a version for {0}'.format(artifact_id))
+
+		# Remove the last part of path (which is a version)
+		path = os.path.dirname(path)
+		filename = os.path.join(path, "maven-metadata.xml")
+		contents = minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  ")
+
+		if do_it: out = open(filename,mode='w')
+		else: out = sys.stdout
+		out.write(contents)
+		if do_it: out.close()
 
 # Build maven-metadata.xml for each individual version of each artifactId
 for group_id, artifacts in groups.iteritems():
