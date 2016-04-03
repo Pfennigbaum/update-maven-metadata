@@ -176,5 +176,14 @@ for group_id, artifacts in groups.iteritems():
 				snapshot = ET.SubElement(versioning,"snapshot")
 				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
 				ET.SubElement(snapshot,"buildNumber").text = str(build_number)
+
+				# Write out the version-specific maven-metadata.xml
+				filename = os.path.join(path, "maven-metadata.xml")
+				contents = minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  ")
+
+				if do_it: out = open(filename,mode='w')
+				else: out = sys.stdout
+				out.write(contents)
+				if do_it: out.close()
 			else: pass
 			print(minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  "), end="")
