@@ -138,6 +138,12 @@ for group_id, artifacts in groups.iteritems():
 					new_stem.append("{0}-{1}-{2}-{3}".format(artifact_id, plain_version, s, build_number))
 					build_number = build_number + 1
 
+				snapshot = ET.SubElement(versioning,"snapshot")
+				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
+				ET.SubElement(snapshot,"buildNumber").text = str(build_number)
+
+				snapshotVersions = ET.SubElement(versioning,"snapshotVersions")
+
 				# Old names
 				old_stem = [os.path.splitext(f)[0] for f in files]
 
@@ -173,9 +179,16 @@ for group_id, artifacts in groups.iteritems():
 					if do_it: os.rmdir(tmp_path)
 					else: print('Removing directoy "{0}"'.format(tmp_path),file=sys.stderr)
 
-				snapshot = ET.SubElement(versioning,"snapshot")
-				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
-				ET.SubElement(snapshot,"buildNumber").text = str(build_number)
+					# Get file name extensions that are relevant
+					for f in new_files:
+						# Get extension (without dot)
+						ext = os.path.splitext(f)[1][1:]
+						if ext == 'sha1': continue
+						if ext == 'md5': continue
+
+						snapshotVersion = ET.SubElement(snapshotVersions, "snapshotVersion")
+						ET.SubElement(snapshotVersion,"extension").text = ext
+						ET.SubElement(snapshotVersion,"value").text = new[len(artifact_id)+1:]
 
 				# Write out the version-specific maven-metadata.xml
 				filename = os.path.join(path, "maven-metadata.xml")
