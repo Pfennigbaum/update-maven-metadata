@@ -148,7 +148,7 @@ for group_id, artifacts in groups.iteritems():
 				old_stem = [os.path.splitext(f)[0] for f in files]
 
 				# Rename all files beginning with the stem
-				for old, new in zip(old_stem,new_stem):
+				for old, new, stamp in zip(old_stem,new_stem,stamps):
 					p = os.path.join(path,old)
 
 					# The old names of all files sharing the stem
@@ -189,6 +189,7 @@ for group_id, artifacts in groups.iteritems():
 						snapshotVersion = ET.SubElement(snapshotVersions, "snapshotVersion")
 						ET.SubElement(snapshotVersion,"extension").text = ext
 						ET.SubElement(snapshotVersion,"value").text = new[len(artifact_id)+1:]
+						ET.SubElement(snapshotVersion,"updated").text = stamp.translate(None,'.')
 
 				# Write out the version-specific maven-metadata.xml
 				filename = os.path.join(path, "maven-metadata.xml")
