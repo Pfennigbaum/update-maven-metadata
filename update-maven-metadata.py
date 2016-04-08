@@ -109,6 +109,7 @@ for group_id, artifacts in groups.iteritems():
 			snapshot_ext = '-SNAPSHOT'
 			is_snapshot = version.endswith(snapshot_ext)
 			mt = ET.Element("metadata")
+			mt.set('modelVersion','1.1.0')
 			ET.SubElement(mt,"groupId").text = group_id
 			ET.SubElement(mt,"artifactId").text = artifact_id
 			ET.SubElement(mt,"version").text = version
