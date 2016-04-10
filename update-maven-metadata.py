@@ -91,7 +91,9 @@ for group_id, artifacts in groups.iteritems():
 		contents = minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  ")
 
 		if do_it: out = open(filename,mode='w')
-		else: out = sys.stdout
+		else:
+			print('Creating file "{0}""'.format(filename),file=sys.stderr)
+			out = sys.stdout
 		out.write(contents)
 		if do_it: out.close()
 
@@ -197,7 +199,9 @@ for group_id, artifacts in groups.iteritems():
 				contents = minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  ")
 
 				if do_it: out = open(filename,mode='w')
-				else: out = sys.stdout
+				else:
+					print('Creating file "{0}"'.format(filename),file=sys.stderr)
+					out = sys.stdout
 				out.write(contents)
 				if do_it: out.close()
 			else: pass
