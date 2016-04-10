@@ -201,4 +201,3 @@ for group_id, artifacts in groups.iteritems():
 				out.write(contents)
 				if do_it: out.close()
 			else: pass
-			print(minidom.parseString(ET.tostring(mt)).toprettyxml(indent="  "), end="")
