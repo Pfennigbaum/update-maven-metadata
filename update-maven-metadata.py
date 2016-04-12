@@ -7,8 +7,10 @@
 from __future__ import print_function
 
 import argparse
+import binascii
 import datetime
 import glob
+import hashlib
 import os
 import os.path
 import re
@@ -22,6 +24,17 @@ def ids(path):
 	if group_id.startswith('./'): group_id = group_id[2:]
 	group_id = group_id.replace('/','.')
 	return group_id, artifact_id
+
+def write_hashs(filename, contents):
+	"""Write relevant hashs of contents to filename"""
+	m = hashlib.md5()
+	m.update(contents)
+	with open(filename + '.md5','w') as f:
+		f.write(binascii.hexlify(m.digest()))
+	s = hashlib.sha1()
+	s.update(contents)
+	with open(filename + '.sha1', 'w') as f:
+		f.write(binascii.hexlify(s.digest()))
 
 parser = argparse.ArgumentParser(description="""
 	Updates the maven-metadata.xml file of Maven artifacts in accordance to the
@@ -95,7 +108,9 @@ for group_id, artifacts in groups.iteritems():
 			print('Creating file "{0}""'.format(filename),file=sys.stderr)
 			out = sys.stdout
 		out.write(contents)
-		if do_it: out.close()
+		if do_it:
+			out.close()
+			write_hashs(filename, contents)
 
 # Build maven-metadata.xml for each individual version of each artifactId
 for group_id, artifacts in groups.iteritems():
@@ -203,5 +218,7 @@ for group_id, artifacts in groups.iteritems():
 					print('Creating file "{0}"'.format(filename),file=sys.stderr)
 					out = sys.stdout
 				out.write(contents)
-				if do_it: out.close()
+				if do_it:
+					out.close()
+					write_hashs(filename, contents)
 			else: pass
