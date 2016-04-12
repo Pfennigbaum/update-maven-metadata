@@ -9,7 +9,8 @@ repository in accordance to the contents. It starts at the current working
 directory and recurses into every directory it can find from there. This
 is useful, after artifacts haven been manually copied to the repository
 without using Maven. Note that you should make a backup before using this
-script.
+script. Also note that currently only a limitted set of features is
+actually implemented.
 
 Usage
 -----
