@@ -195,7 +195,7 @@ for group_id, artifacts in groups.iteritems():
 
 					for tmp_f, new_f in zip(tmp_files, new_files):
 						if do_it: os.rename(tmp_f, new_f)
-						else: print('Renaming "{0}" to "{1}"'.format(tmp_f, old_f),file=sys.stderr)
+						else: print('Renaming "{0}" to "{1}"'.format(tmp_f, new_f),file=sys.stderr)
 
 					if do_it: os.rmdir(tmp_path)
 					else: print('Removing directoy "{0}"'.format(tmp_path),file=sys.stderr)
