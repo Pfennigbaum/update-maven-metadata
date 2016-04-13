@@ -154,10 +154,10 @@ for group_id, artifacts in groups.iteritems():
 
 				stamps = [stamp_of(s) for s in files]
 				new_stem = []
-				build_number = 1
+				build_number = 0
 				for s in stamps:
-					new_stem.append("{0}-{1}-{2}-{3}".format(artifact_id, plain_version, s, build_number))
 					build_number = build_number + 1
+					new_stem.append("{0}-{1}-{2}-{3}".format(artifact_id, plain_version, s, build_number))
 
 				snapshot = ET.SubElement(versioning,"snapshot")
 				ET.SubElement(snapshot,"timestamp").text = str(stamps[-1])
