@@ -39,7 +39,7 @@ def write_hashs(filename, contents):
 parser = argparse.ArgumentParser(description="""
 	Updates the maven-metadata.xml file of Maven artifacts in accordance to the
 	contents. It starts at the current working directory. It is very simple and
-	thus may only work for very simple repostories like used by the Ontologizer.
+	thus may only work for very simple repositories like used by the Ontologizer.
 	Make sure to make a backup before using it.
 	""")
 parser.add_argument('--do-it', action='store_true', default=False, help="""
