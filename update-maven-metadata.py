@@ -108,7 +108,7 @@ for group_id, artifacts in groups.iteritems():
 
 		if do_it: out = open(filename,mode='w')
 		else:
-			print('Creating file "{0}""'.format(filename),file=sys.stderr)
+			print('Creating file "{0}"'.format(filename),file=sys.stderr)
 			out = sys.stdout
 		out.write(contents)
 		if do_it:
