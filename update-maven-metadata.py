@@ -207,7 +207,13 @@ for group_id, artifacts in groups.iteritems():
 						if ext == 'sha1': continue
 						if ext == 'md5': continue
 
+						# FIXME: Extract the classifier from the filename
+						classifier = None
+						if f.endswith('-sources.jar'): classifier = 'sources'
+						elif f.endswith('-javadoc.jar'): classifier = 'javadoc'
+
 						snapshotVersion = ET.SubElement(snapshotVersions, "snapshotVersion")
+						if classifier is not None: ET.SubElement(snapshotVersion,"classifier").text = classifier
 						ET.SubElement(snapshotVersion,"extension").text = ext
 						ET.SubElement(snapshotVersion,"value").text = new[len(artifact_id)+1:]
 						ET.SubElement(snapshotVersion,"updated").text = stamp.translate(None,'.')
