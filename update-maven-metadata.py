@@ -28,13 +28,13 @@ def ids(path):
 def write_hashs(filename, contents):
 	"""Write relevant hashs of contents to filename"""
 	m = hashlib.md5()
-	m.update(contents)
+	m.update(contents.encode('utf-8'))
 	with open(filename + '.md5','w') as f:
-		f.write(binascii.hexlify(m.digest()))
+		f.write(binascii.hexlify(m.digest()).decode())
 	s = hashlib.sha1()
-	s.update(contents)
+	s.update(contents.encode('utf-8'))
 	with open(filename + '.sha1', 'w') as f:
-		f.write(binascii.hexlify(s.digest()))
+		f.write(binascii.hexlify(s.digest()).decode())
 
 parser = argparse.ArgumentParser(description="""
 	Updates the maven-metadata.xml file of Maven artifacts in accordance to the
@@ -84,8 +84,8 @@ for root, dir, files in os.walk("."):
 		groups[group_id][artifact_id][version]["files"].append(file)
 
 # Build maven-metadata.xml for each artifact
-for group_id, artifacts in groups.iteritems():
-	for artifact_id, artifact_versions in artifacts.iteritems():
+for group_id, artifacts in groups.items():
+	for artifact_id, artifact_versions in artifacts.items():
 		mt = ET.Element("metadata")
 		ET.SubElement(mt,"groupId").text = group_id
 		ET.SubElement(mt,"artifactId").text = artifact_id
@@ -116,8 +116,8 @@ for group_id, artifacts in groups.iteritems():
 			write_hashs(filename, contents)
 
 # Build maven-metadata.xml for each individual version of each artifactId
-for group_id, artifacts in groups.iteritems():
-	for artifact_id, artifact_versions in artifacts.iteritems():
+for group_id, artifacts in groups.items():
+	for artifact_id, artifact_versions in artifacts.items():
 		for version in artifact_versions:
 			files = artifact_versions[version]["files"]
 			path = artifact_versions[version]["path"]
