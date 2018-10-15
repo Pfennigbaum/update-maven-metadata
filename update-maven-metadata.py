@@ -64,10 +64,9 @@ for root, dir, files in os.walk("."):
 		dir.remove('.git')
 		continue
 
-	for file in [f for f in files if f.endswith('.jar')]:
+	for file in [f for f in files if (f.endswith('.jar') | f.endswith('.aar'))]:
 		if file.endswith('-sources.jar'): continue
 		if file.endswith('-javadoc.jar'): continue
-
 		version = os.path.basename(root)
 		other = os.path.dirname(root)
 		group_id, artifact_id = ids(other)
