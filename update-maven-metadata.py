@@ -22,7 +22,9 @@ def ids(path):
 	"""Extract the group id and artifact id from the path."""
 	group_id, artifact_id = os.path.split(path)
 	if group_id.startswith('./'): group_id = group_id[2:]
+	if group_id.startswith('.\\'): group_id = group_id[2:]
 	group_id = group_id.replace('/','.')
+	group_id = group_id.replace('\\','.')
 	return group_id, artifact_id
 
 def write_hashs(filename, contents):
