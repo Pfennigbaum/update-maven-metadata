@@ -91,6 +91,7 @@ for group_id, artifacts in groups.items():
 		ET.SubElement(mt,"groupId").text = group_id
 		ET.SubElement(mt,"artifactId").text = artifact_id
 		versioning = ET.SubElement(mt,"versioning")
+		release = ET.SubElement(versioning,"release")
 		versions = ET.SubElement(versioning,"versions")
 		path = None
 		for version in artifact_versions:
@@ -98,6 +99,8 @@ for group_id, artifacts in groups.items():
 				path = groups[group_id][artifact_id][version]["path"]
 			ET.SubElement(versions,"version").text = version
 		ET.SubElement(versioning, "lastUpdated").text = utcnow().strftime("%Y%m%d%H%M%S")
+		
+		release.text=version
 
 		if path is None:
 			sys.exit('Could not find a version for {0}'.format(artifact_id))
